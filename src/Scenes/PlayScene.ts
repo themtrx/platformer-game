@@ -6,6 +6,8 @@ class PlayScene extends GameScene {
     platforms: Phaser.Tilemaps.TilemapLayer
     environment: Phaser.Tilemaps.TilemapLayer
 
+    player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
     constructor() {
         super("PlayScene")
     }
@@ -13,6 +15,8 @@ class PlayScene extends GameScene {
     create() {
         this.createMap()
         this.createLayers()
+
+        this.createPlayer()
     } 
 
     update(time: number, delta: number) {
@@ -28,6 +32,12 @@ class PlayScene extends GameScene {
         const tileset1 = this.map.getTileset("main_lev_build_1")
         this.platforms = this.map.createLayer("platforms", tileset1)
         this.environment = this.map.createLayer("environment", tileset1)
+    }
+
+    createPlayer() {
+        this.player = this.physics.add.sprite(100, 100, "player")
+        this.player.setGravityY(500)
+        this.player.setCollideWorldBounds(true)
     }
     
 }
