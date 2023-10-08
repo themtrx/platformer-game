@@ -3,21 +3,17 @@ import Phaser from "phaser";
 import PreloadScene from "./Scenes/PreloadScene"
 import PlayScene from "./Scenes/PlayScene"
 
-export const PRELOAD_CONFIG = {
-  cacutsesCount: 6,
-  birdsCount: 1
-}
-
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 1000,
-  height: 340,
+  width: 1280,
+  height: 480,
   pixelArt: true,
-  transparent: true,
+  transparent: false,
+  backgroundColor: "#000000",
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   },
   scene: [ PreloadScene, PlayScene ]
