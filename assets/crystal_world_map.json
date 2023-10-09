@@ -202,7 +202,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"Type",
+                         "name":"type",
                          "type":"string",
                          "value":"Birdman"
                         }],
@@ -220,7 +220,7 @@
                  "point":true,
                  "properties":[
                         {
-                         "name":"Type",
+                         "name":"type",
                          "type":"string",
                          "value":"Birdman"
                         }],

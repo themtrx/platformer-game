@@ -2,7 +2,7 @@ import { GameScene } from "../Scenes/GameScene";
 import initAnimations from "../entities/playerAnims"
 import collidable from "../mixins/collidable";
 
-export class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     scene: GameScene
     cursors: Phaser.Types.Input.Keyboard.CursorKeys

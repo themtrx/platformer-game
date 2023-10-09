@@ -1,6 +1,6 @@
 import { GameScene } from "./GameScene"
-import { Player } from "../entities/Player"
-import { Birdman } from "../entities/Birdman"
+import Player from "../entities/Player"
+import { getEnemyTypes } from "../entities/enemyTypes"
 
 class PlayScene extends GameScene {
    
@@ -14,7 +14,7 @@ class PlayScene extends GameScene {
     endZone: Phaser.Types.Tilemaps.TiledObject
 
     player: Player
-    enemies: Birdman[]
+    enemies: any[]
 
     enemySpawns: Phaser.Tilemaps.ObjectLayer
 
@@ -70,8 +70,16 @@ class PlayScene extends GameScene {
     }
 
     createEnemies() {
+        const enemyTypes = getEnemyTypes()
+
         this.enemies = this.enemySpawns.objects.map(spawnPoint => {
-            return new Birdman(this, spawnPoint.x, spawnPoint.y)
+            // Get custom propery "type" from Tiled
+            const typeProperty = spawnPoint.properties.find((property: any) => property.name == "type")
+            
+            // Create an instance of the enemy
+            // Typescript returns error, so I have to use typePropery.value as keyof typeof enemyTypes
+            // To tell typescript that the typeProperty.value is type of enemyTypes
+            return new enemyTypes[typeProperty.value as keyof typeof enemyTypes](this, spawnPoint.x, spawnPoint.y)
         })
     }
 
