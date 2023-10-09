@@ -41,7 +41,7 @@ class PlayScene extends GameScene {
     }
 
     createPlayer() {
-        this.player = new Player(this, 100, 100)
+        this.player = new Player(this, 50, 100)
         this.physics.add.collider(this.player, this.platformCollider)
     }
     
