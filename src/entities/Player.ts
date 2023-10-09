@@ -7,7 +7,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys
 
     gravity: number = 500
-    playerSpeed: number = 200
+    playerSpeed: number = 150
 
     jumpCount: number = 0
     consecutiveJumps: number = 1
@@ -51,13 +51,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         if((isSpaceJustDown) && (onFloor || this.jumpCount < this.consecutiveJumps)){
-            this.setVelocityY(-this.playerSpeed * 1.5)
+            this.setVelocityY(-this.playerSpeed * 2)
             this.jumpCount++
         }
 
-        if(onFloor) this.jumpCount = 0
+        if(onFloor) {
+            this.jumpCount = 0
+        }
 
-        this.body.velocity.x != 0 ?
-            this.play('run', true) : this.play('idle', true)
+        onFloor ?
+            this.body.velocity.x != 0 ?
+                this.play('run', true) : this.play('idle', true) :
+            this.play('jump', true)
     }
 }
