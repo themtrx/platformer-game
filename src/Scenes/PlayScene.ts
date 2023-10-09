@@ -1,5 +1,6 @@
 import { GameScene } from "./GameScene"
 import { Player } from "../entities/Player"
+import { Birdman } from "../entities/Birdman"
 
 class PlayScene extends GameScene {
    
@@ -13,6 +14,7 @@ class PlayScene extends GameScene {
     endZone: Phaser.Types.Tilemaps.TiledObject
 
     player: Player
+    enemy: Birdman
 
     constructor() {
         super("PlayScene")
@@ -24,6 +26,8 @@ class PlayScene extends GameScene {
         this.getPlayerZones()
         this.createPlayer()
         this.createPlayerColliders()
+        this.createEnemy()
+        this.createEnemyColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
     } 
@@ -62,6 +66,16 @@ class PlayScene extends GameScene {
         this.player.addCollider(this.platformCollider)
     }
 
+    createEnemy() {
+        this.enemy = new Birdman(this, 100, 100)
+    }
+
+    createEnemyColliders() {
+        this.enemy
+            .addCollider(this.platformCollider)
+            .addCollider(this.player)
+    }
+
     setUpFollowupCameraOn() {
         this.cameras.main.startFollow(this.player)
         this.physics.world.setBounds(0, 0, this.mapWidth + this.mapOffset, this.gameHeight + 200)
@@ -79,7 +93,7 @@ class PlayScene extends GameScene {
             console.log("You won!")
         })
     }
-    
+
 }
 
 export default PlayScene

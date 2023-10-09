@@ -13,7 +13,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     jumpCount: number = 0
     consecutiveJumps: number = 1
 
-    addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => void
+    addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     
     constructor(scene: GameScene, x: number, y: number){
         super(scene, x, y, 'player')
