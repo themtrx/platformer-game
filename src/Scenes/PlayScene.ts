@@ -4,6 +4,7 @@ class PlayScene extends GameScene {
    
     map: Phaser.Tilemaps.Tilemap
     platforms: Phaser.Tilemaps.TilemapLayer
+    platformCollider: Phaser.Tilemaps.TilemapLayer
     environment: Phaser.Tilemaps.TilemapLayer
 
     player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
@@ -30,14 +31,19 @@ class PlayScene extends GameScene {
 
     createLayers() {
         const tileset1 = this.map.getTileset("main_lev_build_1")
-        this.platforms = this.map.createLayer("platforms", tileset1)
+
+        this.platformCollider = this.map.createLayer("platform_colliders", tileset1)
         this.environment = this.map.createLayer("environment", tileset1)
+        this.platforms = this.map.createLayer("platforms", tileset1)
+
+        this.platformCollider.setCollisionByProperty({collides: true})
     }
 
     createPlayer() {
         this.player = this.physics.add.sprite(100, 100, "player")
         this.player.setGravityY(500)
         this.player.setCollideWorldBounds(true)
+        this.physics.add.collider(this.player, this.platformCollider)
     }
     
 }
