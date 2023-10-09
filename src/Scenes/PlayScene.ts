@@ -20,6 +20,8 @@ class PlayScene extends GameScene {
 
         this.createPlayer()
         this.createPlayerColliders()
+
+        this.setUpFollowupCameraOn()
     } 
 
     update(time: number, delta: number) {
@@ -47,6 +49,12 @@ class PlayScene extends GameScene {
 
     createPlayerColliders() {
         this.player.addCollider(this.platformCollider)
+    }
+
+    setUpFollowupCameraOn() {
+        this.cameras.main.startFollow(this.player)
+        this.physics.world.setBounds(0, 0, this.mapWidth + this.mapOffset, this.gameHeight + 200)
+        this.cameras.main.setBounds(0, 0, this.gameWidth + this.mapOffset, this.gameHeight).setZoom(this.zoomFactor)
     }
     
 }

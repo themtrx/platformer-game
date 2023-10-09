@@ -3,10 +3,13 @@ import Phaser from "phaser";
 import PreloadScene from "./Scenes/PreloadScene"
 import PlayScene from "./Scenes/PlayScene"
 
+const WIDTH = document.body.offsetWidth
+const HEIGHT = 600
+
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 1280,
-  height: 480,
+  width: WIDTH,
+  height: HEIGHT,
   pixelArt: true,
   transparent: false,
   backgroundColor: "#000000",

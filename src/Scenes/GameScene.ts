@@ -1,6 +1,8 @@
 export class GameScene extends Phaser.Scene {
 
+    mapWidth: number = 1600
     isGameRunning: boolean = false
+    zoomFactor: number = 1.5
 
     get gameWidth() {
         return this.game.config.width as number
@@ -8,6 +10,14 @@ export class GameScene extends Phaser.Scene {
 
     get gameHeight() {
         return this.game.config.height as number
+    }
+
+    get mapOffset() {
+        if(this.mapWidth > this.gameWidth) {
+            return this.mapWidth - this.gameWidth
+        }
+
+        return 0
     }
 
     constructor(key: string){
