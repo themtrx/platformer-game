@@ -19,6 +19,7 @@ class PlayScene extends GameScene {
         this.createLayers()
 
         this.createPlayer()
+        this.createPlayerColliders()
     } 
 
     update(time: number, delta: number) {
@@ -42,7 +43,10 @@ class PlayScene extends GameScene {
 
     createPlayer() {
         this.player = new Player(this, 50, 100)
-        this.physics.add.collider(this.player, this.platformCollider)
+    }
+
+    createPlayerColliders() {
+        this.player.addCollider(this.platformCollider)
     }
     
 }
