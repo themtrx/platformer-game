@@ -14,7 +14,9 @@ class PlayScene extends GameScene {
     endZone: Phaser.Types.Tilemaps.TiledObject
 
     player: Player
-    enemy: Birdman
+    enemies: Birdman[]
+
+    enemySpawns: Phaser.Tilemaps.ObjectLayer
 
     constructor() {
         super("PlayScene")
@@ -26,8 +28,8 @@ class PlayScene extends GameScene {
         this.getPlayerZones()
         this.createPlayer()
         this.createPlayerColliders()
-        this.createEnemy()
-        this.createEnemyColliders()
+        this.createEnemies()
+        this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
     } 
@@ -48,6 +50,7 @@ class PlayScene extends GameScene {
         this.environment = this.map.createLayer("environment", tileset1)
         this.platforms = this.map.createLayer("platforms", tileset1)
         this.playerZones = this.map.getObjectLayer("player_zones")
+        this.enemySpawns = this.map.getObjectLayer("enemy_spawns")
 
         this.platformCollider.setCollisionByProperty({ collides: true })
     }
@@ -66,14 +69,18 @@ class PlayScene extends GameScene {
         this.player.addCollider(this.platformCollider)
     }
 
-    createEnemy() {
-        this.enemy = new Birdman(this, 100, 100)
+    createEnemies() {
+        this.enemies = this.enemySpawns.objects.map(spawnPoint => {
+            return new Birdman(this, spawnPoint.x, spawnPoint.y)
+        })
     }
 
-    createEnemyColliders() {
-        this.enemy
-            .addCollider(this.platformCollider)
-            .addCollider(this.player)
+    createEnemiesColliders() {
+        this.enemies.forEach(enemy => {
+            enemy
+                .addCollider(this.platformCollider)
+                .addCollider(this.player)
+        })
     }
 
     setUpFollowupCameraOn() {

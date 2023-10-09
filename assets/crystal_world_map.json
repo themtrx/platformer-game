@@ -189,9 +189,56 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"enemy_spawns",
+         "objects":[
+                {
+                 "height":0,
+                 "id":4,
+                 "name":"Spawn",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Type",
+                         "type":"string",
+                         "value":"Birdman"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":312.5,
+                 "y":217.5
+                }, 
+                {
+                 "height":0,
+                 "id":6,
+                 "name":"Spawn",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Type",
+                         "type":"string",
+                         "value":"Birdman"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":389.5,
+                 "y":393.5
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":3,
+ "nextlayerid":6,
+ "nextobjectid":7,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
