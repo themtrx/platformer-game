@@ -1,4 +1,5 @@
 import { GameScene } from "./GameScene"
+import { Player } from "../entities/Player"
 
 class PlayScene extends GameScene {
    
@@ -7,7 +8,7 @@ class PlayScene extends GameScene {
     platformCollider: Phaser.Tilemaps.TilemapLayer
     environment: Phaser.Tilemaps.TilemapLayer
 
-    player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    player: Player
 
     constructor() {
         super("PlayScene")
@@ -40,9 +41,7 @@ class PlayScene extends GameScene {
     }
 
     createPlayer() {
-        this.player = this.physics.add.sprite(100, 100, "player")
-        this.player.setGravityY(500)
-        this.player.setCollideWorldBounds(true)
+        this.player = new Player(this, 100, 100)
         this.physics.add.collider(this.player, this.platformCollider)
     }
     
