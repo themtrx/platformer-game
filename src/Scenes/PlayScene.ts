@@ -18,6 +18,10 @@ class PlayScene extends GameScene {
 
     enemySpawns: Phaser.Tilemaps.ObjectLayer
 
+    graphics: Phaser.GameObjects.Graphics
+    line: Phaser.Geom.Line
+    tileHits: Phaser.Tilemaps.Tile[]
+
     constructor() {
         super("PlayScene")
     }
@@ -32,10 +36,29 @@ class PlayScene extends GameScene {
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
+
     } 
 
-    update(time: number, delta: number) {
+
+    finishDrawing(pointer: Phaser.Input.Pointer) {
+        this.line.x2 = pointer.worldX
+        this.line.y2 = pointer.worldY
         
+        this.graphics.clear()
+        this.graphics.strokeLineShape(this.line)
+
+        this.tileHits = this.platforms.getTilesWithinShape(this.line)
+
+        if(this.tileHits.length > 0){
+            this.tileHits.forEach(tile => {
+                tile.index != -1 &&
+                    tile.setCollision(true)
+            })
+        }
+    }
+
+    update(time: number, delta: number) {
+       
     }
 
     createMap() {
