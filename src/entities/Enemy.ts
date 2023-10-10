@@ -46,6 +46,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(time: number, delta: number) {
+        this.patrol(time)
+    }
+
+    patrol(time: number) {
+
+        if(!this.body || !(this.body as  Phaser.Physics.Arcade.Body).onFloor())
 
         this.currentPatrolDistance += Math.abs(this.body.deltaX())
 
