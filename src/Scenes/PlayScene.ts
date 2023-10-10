@@ -110,10 +110,14 @@ class PlayScene extends GameScene {
         })
     }
 
+    onPlayerCollision(enemy: Phaser.Physics.Arcade.Sprite, player: Player) {
+        player.takesHit(enemy)
+    }
+
     createEnemiesColliders() {
         this.enemies
                 .addCollider(this.platformCollider)
-                .addCollider(this.player)
+                .addCollider(this.player, this.onPlayerCollision)
     }
 
     setUpFollowupCameraOn() {

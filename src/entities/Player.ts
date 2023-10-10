@@ -72,5 +72,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.play('jump', true)
     }
 
+    takesHit(initiator: Phaser.Physics.Arcade.Sprite) {
+        console.log('ive been hit')
+        console.log(initiator)
+    }
     
 }
