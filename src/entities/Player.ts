@@ -1,4 +1,5 @@
 import { GameScene } from "../Scenes/GameScene";
+import Healthbar from "../hud/Healthbar"
 import initAnimations from "../entities/anims/playerAnims"
 import collidable from "../mixins/collidable";
 
@@ -9,6 +10,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     gravity: number = 500
     playerSpeed: number = 150
+
+    health: number = 100
+    hp: Healthbar
 
     jumpCount: number = 0
     consecutiveJumps: number = 1
@@ -32,6 +36,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     init(){
         this.cursors = this.scene.input.keyboard.createCursorKeys()
+
+        this.hp = new Healthbar(this.scene, this.scene.leftTopCorner.x + 10, this.scene.leftTopCorner.y + 10, this.health)
 
         this.setGravityY(this.gravity)
         this.setCollideWorldBounds(true)

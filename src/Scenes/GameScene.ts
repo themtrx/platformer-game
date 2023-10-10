@@ -24,6 +24,26 @@ export class GameScene extends Phaser.Scene {
         return this.game.config.physics.arcade.debug
     }
 
+    get leftTopCorner() {
+        const widhtByZoom = this.gameWidth / this.zoomFactor
+        const heightByZoom = this.gameHeight / this.zoomFactor
+
+        const x = (this.gameWidth - widhtByZoom) / 2
+        const y = (this.gameHeight - heightByZoom) / 2
+
+        return { x, y }
+    }
+
+    get rigthTopCorner() {
+        const widhtByZoom = this.gameWidth / this.zoomFactor
+        const heightByZoom = this.gameHeight / this.zoomFactor
+
+        const x = (widhtByZoom + (this.gameWidth - widhtByZoom)) / 2
+        const y = (this.gameHeight - heightByZoom) / 2
+
+        return { x, y }
+    }
+
     constructor(key: string){
         super(key)
     }
