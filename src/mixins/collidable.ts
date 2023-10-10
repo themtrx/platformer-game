@@ -9,7 +9,7 @@ export default {
     prevRay: null,
     prevHasHit: null,
 
-    raycast(body: Phaser.Physics.Arcade.Body, layer: Phaser.Tilemaps.TilemapLayer, raylenght: number = 30, precision = 1) {
+    raycast(body: Phaser.Physics.Arcade.Body, layer: Phaser.Tilemaps.TilemapLayer, {raylenght = 30, precision = 1, steepnes = 1 }) {
         const { x, y, width, halfHeight } = body
 
         this.bodyPoisitionDifferenceX += body.x - body.prev.x
@@ -23,19 +23,19 @@ export default {
 
         const line = new Phaser.Geom.Line()
         let hasHit = false 
-        
+
         switch(body.facing) {
            case Phaser.Physics.Arcade.FACING_RIGHT: {
             line.x1 = x + width
             line.y1 = y + halfHeight
-            line.x2 = line.x1 + raylenght
+            line.x2 = line.x1 + raylenght * steepnes
             line.y2 = line.y1 + raylenght
             break;
            }    
            case Phaser.Physics.Arcade.FACING_LEFT: {
             line.x1 = x
             line.y1 = y + halfHeight
-            line.x2 = line.x1 - raylenght
+            line.x2 = line.x1 - raylenght * steepnes
             line.y2 = line.y1 + raylenght
             break;
            } 

@@ -8,14 +8,17 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     gravity: number = 500
     speed: number = 50
     timeFromLastTurn: number = 0
-    maxPatrolDistance: number = 200
+    maxPatrolDistance: number = 250
     currentPatrolDistance: number = 0
 
     rayGraphics: Phaser.GameObjects.Graphics
     setPlatformColliderLayer: Phaser.Tilemaps.TilemapLayer
 
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
-    raycast: (body: Phaser.Physics.Arcade.Body, layer: Phaser.Tilemaps.TilemapLayer, raylenght?: number, precision?: number) => { ray: Phaser.Geom.Line; hasHit: boolean; }
+    raycast: (body: Phaser.Physics.Arcade.Body, layer: Phaser.Tilemaps.TilemapLayer, 
+                options?:{ raylenght?: number, precision?: number, steepnes?: number }) => {
+                        ray: Phaser.Geom.Line; hasHit: boolean; 
+                    }
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key)
@@ -55,7 +58,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         this.currentPatrolDistance += Math.abs(this.body.deltaX())
 
-        const { ray, hasHit } = this.raycast(this.body as Phaser.Physics.Arcade.Body, this.setPlatformColliderLayer, 30, 2)
+        const { ray, hasHit } = this.raycast(this.body as Phaser.Physics.Arcade.Body, this.setPlatformColliderLayer, { raylenght: 30, precision: 1, steepnes: 0.3 })
         
         // Check if the ray has hit platform
         // and wait for 100ms before turning
