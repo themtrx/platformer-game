@@ -9,9 +9,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     speed: number = 150
 
     rayGraphics: Phaser.GameObjects.Graphics
+    setPlatformColliderLayer: Phaser.Tilemaps.TilemapLayer
 
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
-    
+    raycast: (body: Phaser.Physics.Arcade.Body, raylenght?: number, precision?: number) => { ray: Phaser.Geom.Line; hasHit: boolean; }
+
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key)
 
@@ -42,21 +44,17 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     update(time: number, delta: number) {
        this.setVelocityX(30)
 
-       const { ray } = this.raycast(this.body as Phaser.Physics.Arcade.Body)
+       const { ray, hasHit } = this.raycast(this.body as Phaser.Physics.Arcade.Body, 30, 2)
+       
+       if(hasHit){
+        
+       }
+       
        this.rayGraphics.clear()
-
        this.rayGraphics.strokeLineShape(ray)
     }
 
-    raycast(body: Phaser.Physics.Arcade.Body, raylenght = 30) {
-        const { x,y, width, halfHeight } = body
-        const line = new Phaser.Geom.Line()
-
-        line.x1 = x + width
-        line.y1 = y + halfHeight
-        line.x2 = line.x1 + raylenght
-        line.y2 = line.y1 + raylenght
-
-        return { ray: line }
+    setPlatformCollider(platformCollidersLayer: Phaser.Tilemaps.TilemapLayer) {
+        this.setPlatformColliderLayer = platformCollidersLayer
     }
 }

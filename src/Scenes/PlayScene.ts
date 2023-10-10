@@ -105,6 +105,7 @@ class PlayScene extends GameScene {
             // Typescript returns error, so I have to use typePropery.value as keyof typeof enemyTypes
             // To tell typescript that the typeProperty.value is type of enemyTypes
             const enemy = new enemyTypes[typeProperty.value as keyof typeof enemyTypes](this, spawnPoint.x, spawnPoint.y)
+            enemy.setPlatformCollider(this.platformCollider)
             this.enemies.add(enemy)
         })
     }
