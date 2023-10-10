@@ -1,5 +1,5 @@
 import { GameScene } from "../Scenes/GameScene";
-import initAnimations from "../entities/playerAnims"
+import initAnimations from "../entities/anims/playerAnims"
 import collidable from "../mixins/collidable";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
