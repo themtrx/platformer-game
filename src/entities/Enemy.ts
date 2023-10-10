@@ -6,13 +6,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     scene: GameScene
 
     gravity: number = 500
-    speed: number = 150
+    speed: number = 50
+    timeFromLastTurn: number = 0
 
     rayGraphics: Phaser.GameObjects.Graphics
     setPlatformColliderLayer: Phaser.Tilemaps.TilemapLayer
 
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
-    raycast: (body: Phaser.Physics.Arcade.Body, raylenght?: number, precision?: number) => { ray: Phaser.Geom.Line; hasHit: boolean; }
+    raycast: (body: Phaser.Physics.Arcade.Body, layer: Phaser.Tilemaps.TilemapLayer, raylenght?: number, precision?: number) => { ray: Phaser.Geom.Line; hasHit: boolean; }
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key)
@@ -35,6 +36,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true)
         this.setOrigin(0.5, 1)
         this.setImmovable(true)
+        this.setVelocityX(this.speed)
     }
 
     initEvents(){
@@ -42,16 +44,19 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(time: number, delta: number) {
-       this.setVelocityX(30)
-
-       const { ray, hasHit } = this.raycast(this.body as Phaser.Physics.Arcade.Body, 30, 2)
-       
-       if(hasHit){
+        const { ray, hasHit } = this.raycast(this.body as Phaser.Physics.Arcade.Body, this.setPlatformColliderLayer, 30, 2)
         
-       }
-       
-       this.rayGraphics.clear()
-       this.rayGraphics.strokeLineShape(ray)
+        // Check if the ray has hit platform
+        // and wait for 100ms before turning
+        // to avoid turning too quickly
+        if(!hasHit && this.timeFromLastTurn + 100 < time){
+            this.setFlipX(!this.flipX)
+            this.setVelocityX(this.speed = -this.speed)
+            this.timeFromLastTurn = time
+        }
+        
+        this.rayGraphics.clear()
+        this.rayGraphics.strokeLineShape(ray)
     }
 
     setPlatformCollider(platformCollidersLayer: Phaser.Tilemaps.TilemapLayer) {
