@@ -4,8 +4,6 @@ import Birdman from "./Birdman"
 //     Birdman: typeof Birdman;
 // }
 
-export const getEnemyTypes = () => {
-    return {
-        Birdman
-    }
+export const ENEMY_TYPES = {
+    Birdman
 }
