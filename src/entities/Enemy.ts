@@ -71,9 +71,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.timeFromLastTurn = time
             this.currentPatrolDistance = 0
         }
+
+        if(this.scene.debugMode && ray){
+            this.rayGraphics.clear()
+            this.rayGraphics.strokeLineShape(ray)
+        }
         
-        this.rayGraphics.clear()
-        this.rayGraphics.strokeLineShape(ray)
     }
 
     setPlatformCollider(platformCollidersLayer: Phaser.Tilemaps.TilemapLayer) {

@@ -13,6 +13,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     jumpCount: number = 0
     consecutiveJumps: number = 1
 
+    hasBeenHit: boolean = false
+    bounceVelocity: number = 200
+
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     
     constructor(scene: GameScene, x: number, y: number){
@@ -43,6 +46,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        if(this.hasBeenHit) return
+
         const { left, right, space } = this.cursors
         const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space)
         const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor()
@@ -72,9 +77,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.play('jump', true)
     }
 
+    bounceOff() {
+        this.body.touching.right ?
+            this.setVelocityX(-this.bounceVelocity) :
+            this.setVelocityX(this.bounceVelocity)
+
+        setTimeout(() => this.setVelocityY(-this.bounceVelocity), 0)
+    }
+
     takesHit(initiator: Phaser.Physics.Arcade.Sprite) {
-        console.log('ive been hit')
-        console.log(initiator)
+        if(this.hasBeenHit) return
+
+        this.hasBeenHit = true
+        this.bounceOff()
+
+        this.scene.time.delayedCall(1000, () => this.hasBeenHit = false)
     }
     
 }

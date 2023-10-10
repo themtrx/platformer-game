@@ -20,6 +20,10 @@ export class GameScene extends Phaser.Scene {
         return 0
     }
 
+    get debugMode() {
+        return this.game.config.physics.arcade.debug
+    }
+
     constructor(key: string){
         super(key)
     }
