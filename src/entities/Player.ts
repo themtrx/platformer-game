@@ -25,6 +25,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     projectiles : Projectiles
 
+    lastDirection: number
+
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     
     constructor(scene: GameScene, x: number, y: number){
@@ -71,9 +73,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor()
   
         if(left.isDown){
+            this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT
             this.setVelocityX(-this.playerSpeed)
             this.setFlipX(true)
         }else if(right.isDown){
+            this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT
             this.setVelocityX(this.playerSpeed)
             this.setFlipX(false)
         }else {
