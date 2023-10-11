@@ -1,10 +1,10 @@
-import { GameScene } from "../Scenes/GameScene";
+import { GameScene } from "../Scenes/GameScene"
 import Healthbar from "../hud/Healthbar"
 import initAnimations from "../entities/anims/playerAnims"
-import collidable from "../mixins/collidable";
-import Enemy from "./Enemy";
-import Projectile from "../attacks/Projectile";
-import Projectiles from "../attacks/Projectiles";
+import collidable from "../mixins/collidable"
+import anims from "../mixins/anims"
+import Enemy from "./Enemy"
+import Projectiles from "../attacks/Projectiles"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -27,6 +27,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT
 
+    isPlayingAnims: (animsKey: string) => boolean
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     
     constructor(scene: GameScene, x: number, y: number){
@@ -35,6 +36,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
+        Object.assign(this, anims)
         Object.assign(this, collidable)
 
         this.init()
@@ -56,6 +58,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.projectiles = new Projectiles(this.scene)
 
         this.scene.input.keyboard.on('keydown-Q', () => {
+            this.play('throw', true)
             this.projectiles.fireProjectile(this)
         })
 
@@ -92,6 +95,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if(onFloor) {
             this.jumpCount = 0
         }
+
+        if(this.isPlayingAnims('throw')) return
 
         onFloor ?
             this.body.velocity.x != 0 ?

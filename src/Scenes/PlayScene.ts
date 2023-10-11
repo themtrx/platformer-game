@@ -59,7 +59,6 @@ class PlayScene extends GameScene {
     }
 
     update(time: number, delta: number) {
-       
     }
 
     createMap() {

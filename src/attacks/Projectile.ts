@@ -6,7 +6,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     speed: number = 300
     maximumDistance: number = 300
     traveledDistance: number = 0
-    cooldown: number = 1000
+    cooldown: number = 500
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key)
