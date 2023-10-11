@@ -21,11 +21,16 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.traveledDistance += this.body.deltaAbsX()
 
         if(this.traveledDistance >= this.maximumDistance) {
-            this.destroy()
+            this.setActive(false)
+            this.setVisible(false)
+            this.traveledDistance = 0
         }
     }
 
-    fire() {
+    fire(x: number, y: number) {
+        this.setActive(true)
+        this.setVisible(true)
+        this.body.reset(x, y)
         this.setVelocityX(this.speed)
     }
     

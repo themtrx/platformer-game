@@ -4,6 +4,7 @@ import initAnimations from "../entities/anims/playerAnims"
 import collidable from "../mixins/collidable";
 import Enemy from "./Enemy";
 import Projectile from "../attacks/Projectile";
+import Projectiles from "../attacks/Projectiles";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -21,6 +22,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     hasBeenHit: boolean = false
     bounceVelocity: number = 200
+
+    projectiles : Projectiles
 
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     
@@ -48,10 +51,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         initAnimations(this.scene.anims)
 
+        this.projectiles = new Projectiles(this.scene)
+
         this.scene.input.keyboard.on('keydown-Q', () => {
-            const projectile = new Projectile(this.scene, this.x, this.y, 'iceball')
-            projectile.fire()
+            this.projectiles.fireProjectile(this)
         })
+
     }
 
     initEvents(){
