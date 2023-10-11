@@ -2,6 +2,7 @@ import { GameScene } from "../Scenes/GameScene";
 import Healthbar from "../hud/Healthbar"
 import initAnimations from "../entities/anims/playerAnims"
 import collidable from "../mixins/collidable";
+import Enemy from "./Enemy";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -37,7 +38,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     init(){
         this.cursors = this.scene.input.keyboard.createCursorKeys()
 
-        this.hp = new Healthbar(this.scene, this.scene.leftTopCorner.x + 10, this.scene.leftTopCorner.y + 10, this.health)
+        this.hp = new Healthbar(this.scene, this.scene.leftTopCorner.x + 10, this.scene.leftTopCorner.y + 10, 2, this.health)
 
         this.setGravityY(this.gravity)
         this.setCollideWorldBounds(true)
@@ -100,12 +101,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         setTimeout(() => this.setVelocityY(-this.bounceVelocity), 0)
     }
 
-    takesHit(initiator: Phaser.Physics.Arcade.Sprite) {
+    takesHit(initiator: Enemy) {
         if(this.hasBeenHit) return
 
         this.hasBeenHit = true
         this.bounceOff()
         const hitAnim = this.playDamageTween()
+
+        this.health -= initiator.damage
+        this.hp.decrease(this.health)
 
         this.scene.time.delayedCall(1000, () => {
             this.hasBeenHit = false

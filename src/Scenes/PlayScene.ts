@@ -1,6 +1,7 @@
 import { GameScene } from "./GameScene"
 import Player from "../entities/Player"
 import Enemies from "../groups/Enemies"
+import Enemy from "../entities/Enemy"
 
 class PlayScene extends GameScene {
    
@@ -110,7 +111,7 @@ class PlayScene extends GameScene {
         })
     }
 
-    onPlayerCollision(enemy: Phaser.Physics.Arcade.Sprite, player: Player) {
+    onPlayerCollision(enemy: Enemy, player: Player) {
         player.takesHit(enemy)
     }
 

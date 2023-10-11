@@ -10,6 +10,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     timeFromLastTurn: number = 0
     maxPatrolDistance: number = 250
     currentPatrolDistance: number = 0
+    damage: number = 10
 
     rayGraphics: Phaser.GameObjects.Graphics
     setPlatformColliderLayer: Phaser.Tilemaps.TilemapLayer
