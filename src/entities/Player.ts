@@ -25,7 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     projectiles : Projectiles
 
-    lastDirection: number
+    lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT
 
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     

@@ -20,7 +20,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
 
         this.traveledDistance += this.body.deltaAbsX()
 
-        if(this.traveledDistance >= this.maximumDistance) {
+        if(this.isOutOfRange()) {
             this.setActive(false)
             this.setVisible(false)
             this.traveledDistance = 0
@@ -32,6 +32,11 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.setVisible(true)
         this.body.reset(x, y)
         this.setVelocityX(this.speed)
+    }
+
+    isOutOfRange() {
+        return this.traveledDistance && 
+            this.traveledDistance >= this.maximumDistance
     }
     
 }
