@@ -1,4 +1,5 @@
 import { GameScene } from "../Scenes/GameScene";
+import Projectile from "../attacks/Projectile";
 import collidable from "../mixins/collidable";
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
@@ -11,6 +12,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     maxPatrolDistance: number = 250
     currentPatrolDistance: number = 0
     damage: number = 10
+    health: number = 40
 
     rayGraphics: Phaser.GameObjects.Graphics
     setPlatformColliderLayer: Phaser.Tilemaps.TilemapLayer
@@ -82,5 +84,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     setPlatformCollider(platformCollidersLayer: Phaser.Tilemaps.TilemapLayer) {
         this.setPlatformColliderLayer = platformCollidersLayer
+    }
+
+    takesHit(source: Projectile){
+        this.health -= source.damage
+        
+        source.setActive(false)
+        source.setVisible(false)
+
+        if(this.health <= 0){
+            console.log('Enemy is terminated')
+        }
     }
 }

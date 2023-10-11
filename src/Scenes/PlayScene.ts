@@ -2,6 +2,7 @@ import { GameScene } from "./GameScene"
 import Player from "../entities/Player"
 import Enemies from "../groups/Enemies"
 import Enemy from "../entities/Enemy"
+import Projectile from "../attacks/Projectile"
 
 class PlayScene extends GameScene {
    
@@ -114,10 +115,15 @@ class PlayScene extends GameScene {
         player.takesHit(enemy)
     }
 
+    onWeaponHit(entity: Enemy, source: Projectile) {
+        entity.takesHit(source)
+    }
+
     createEnemiesColliders() {
         this.enemies
                 .addCollider(this.platformCollider)
                 .addCollider(this.player, this.onPlayerCollision)
+                .addCollider(this.player.projectiles, this.onWeaponHit)
     }
 
     setUpFollowupCameraOn() {
