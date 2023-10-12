@@ -126,6 +126,7 @@ class PlayScene extends GameScene {
                 .addCollider(this.platformCollider)
                 .addCollider(this.player, this.onPlayerCollision)
                 .addCollider(this.player.projectiles, this.onWeaponHit)
+                .addOverlap(this.player.meleWeapon, this.onWeaponHit)
     }
 
     setUpFollowupCameraOn() {

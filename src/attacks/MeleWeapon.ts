@@ -1,5 +1,7 @@
 import { GameScene } from "../Scenes/GameScene"
 import Player from "../entities/Player"
+import Enemy from "../entities/Enemy"
+import EffectManager from "../effects/EffectManager"
 
 export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
     scene: GameScene
@@ -9,6 +11,7 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
     weaponName: string
     wielder: Player
     weaponAnim: string
+    effectManager = new EffectManager(this.scene)
 
     constructor(scene: GameScene, x: number, y: number, weaponName: string){
         super(scene, x, y, weaponName)
@@ -29,6 +32,7 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
             if(animation.key == this.weaponAnim){
                 this.activateWeapon(false)
                 this.body.reset(0, 0)
+                this.body.checkCollision.none = false
             }
         })
     }
@@ -56,6 +60,12 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
     activateWeapon(isActivate: boolean) {
         this.setActive(isActivate)
         this.setVisible(isActivate)
+    }
+
+    deliversHit(target: Enemy) {
+        const impactPosition = { x: this.x, y: this.getRightCenter().y }
+        this.effectManager.playEffectOn('hit-effect', target, impactPosition)
+        this.body.checkCollision.none = true
     }
     
 }

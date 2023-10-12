@@ -5,6 +5,10 @@ export default {
         this.scene.physics.add.collider(this, otherGameObject, callback, null, this)
         return this
     },
+    addOverlap(otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) {
+        this.scene.physics.add.overlap(this, otherGameObject, callback, null, this)
+        return this
+    },
     bodyPoisitionDifferenceX: 0,
     prevRay: null,
     prevHasHit: null,
