@@ -5,6 +5,7 @@ import collidable from "../mixins/collidable"
 import anims from "../mixins/anims"
 import Enemy from "./Enemy"
 import Projectiles from "../attacks/Projectiles"
+import MeleWeapon from "../attacks/MeleWeapon"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -24,6 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     bounceVelocity: number = 200
 
     projectiles : Projectiles
+    meleWeapon: MeleWeapon
 
     lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT
 
@@ -56,10 +58,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         initAnimations(this.scene.anims)
 
         this.projectiles = new Projectiles(this.scene)
+        this.meleWeapon = new MeleWeapon(this.scene, 0, 0, 'sword-attack')
 
         this.scene.input.keyboard.on('keydown-Q', () => {
             this.play('throw', true)
             this.projectiles.fireProjectile(this)
+        })
+
+        this.scene.input.keyboard.on('keydown-E', () => {
+            this.play('throw', true)
+            this.meleWeapon.swing(this)
         })
 
     }

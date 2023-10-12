@@ -26,6 +26,10 @@ class PreloadScene extends Phaser.Scene {
         this.load.spritesheet('hit-sheet', "weapons/hit_effect_sheet.png", {
             frameWidth: 32, frameHeight: 32
         })
+
+        this.load.spritesheet('sword-attack', "weapons/sword_sheet_1.png", {
+            frameWidth: 52, frameHeight: 32, spacing: 15
+        })
     }
 
     create() {
