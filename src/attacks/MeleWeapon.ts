@@ -18,9 +18,17 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
 
         this.weaponName = weaponName
+        this.setOrigin(0.5, 1)
         this.activateWeapon(false)
 
         this.weaponAnim = weaponName + '-swing'
+
+        this.on('animationcomplete', (animation: Phaser.Animations.Animation) => {
+            if(animation.key == this.weaponAnim){
+                this.activateWeapon(false)
+                this.body.reset(0, 0)
+            }
+        })
     }
 
     swing(wielder: Player) {
