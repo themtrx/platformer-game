@@ -1,9 +1,7 @@
 import Birdman from "./Birdman"
-
-// export interface EnemyTypes {
-//     Birdman: typeof Birdman;
-// }
+import Snaky from "./Snaky"
 
 export const ENEMY_TYPES = {
-    Birdman
+    Birdman,
+    Snaky
 }
