@@ -19,6 +19,8 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
 
         this.weaponName = weaponName
         this.setOrigin(0.5, 1)
+        this.setDepth(1)
+
         this.activateWeapon(false)
 
         this.weaponAnim = weaponName + '-swing'
@@ -31,10 +33,23 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
+    protected preUpdate(time: number, delta: number) {
+        super.preUpdate(time, delta)
+
+        if(!this.active) return
+
+        if(this.wielder.lastDirection == Phaser.Physics.Arcade.FACING_RIGHT){
+            this.setFlipX(false)
+            this.body.reset(this.wielder.x + 15, this.wielder.y)
+        }else {
+            this.setFlipX(true)
+            this.body.reset(this.wielder.x - 15, this.wielder.y)
+        }
+    }
+
     swing(wielder: Player) {
         this.wielder = wielder
         this.activateWeapon(true)
-        this.body.reset(wielder.x, wielder.y)
         this.anims.play(this.weaponAnim, true)
     }
 
