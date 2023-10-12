@@ -1,6 +1,6 @@
-import { GameScene } from "../Scenes/GameScene";
+import { GameScene } from "../Scenes/GameScene"
 import Enemy from "../entities/Enemy"
-import SpriteEffect from "../effects/SpriteEffect";
+import EffectManager from "../effects/EffectManager"
 
 export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     scene: GameScene
@@ -10,6 +10,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     traveledDistance: number = 0
     cooldown: number = 500
     damage: number = 10
+    effectManager = new EffectManager(this.scene)
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key)
@@ -40,8 +41,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.activateProjectile(false)
         this.traveledDistance = 0
         this.body.reset(0, 0)
-
-        new SpriteEffect(this.scene, 0, 0, 'hit-effect').playOn(target)
+        this.effectManager.playEffectOn('hit-effect', target)
     }
 
     activateProjectile(isActive: boolean) {
