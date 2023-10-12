@@ -14,7 +14,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     currentPatrolDistance: number = 0
     damage: number = 10
     health: number = 40
-    lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT
 
     rayGraphics: Phaser.GameObjects.Graphics
     setPlatformColliderLayer: Phaser.Tilemaps.TilemapLayer

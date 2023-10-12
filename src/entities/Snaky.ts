@@ -11,6 +11,7 @@ export default class Snaky extends Enemy {
     projectiles: Projectiles
     timeFromLastAttack: number = 0
     attackDelay: number
+    lastDirection: number = null
 
     constructor(scene: GameScene, x: number, y: number){
         super(scene, x, y, 'snaky')
@@ -30,6 +31,12 @@ export default class Snaky extends Enemy {
 
     update(time: number, delta:number){
         super.update(time, delta)
+
+        if(this.body.velocity.x > 0) {
+            this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT
+        }else {
+            this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT
+        }
         
         if(this.timeFromLastAttack + this.attackDelay <= time){
             this.projectiles.fireProjectile(this)

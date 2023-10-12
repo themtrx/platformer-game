@@ -4,6 +4,8 @@ import Projectile from "./Projectile"
 import { getTimestamp } from "../utils/functions"
 import Enemy from "../entities/Enemy"
 
+
+type ProjectileInitiator = Player | Enemy
 export default class Projectiles extends Phaser.Physics.Arcade.Group {
     timeFromLastProjectile: Number
 
@@ -19,7 +21,7 @@ export default class Projectiles extends Phaser.Physics.Arcade.Group {
         })
     }
 
-    fireProjectile(initiator: Player | Enemy) {
+    fireProjectile(initiator: ProjectileInitiator) {
         const projectile = this.getFirstDead(false)
 
         if(!projectile) return
@@ -29,18 +31,22 @@ export default class Projectiles extends Phaser.Physics.Arcade.Group {
 
         const center = initiator.getCenter()
         let centerX = center.x
-
-        if(initiator.lastDirection == Phaser.Physics.Arcade.FACING_RIGHT) {
-            projectile.speed = Math.abs(projectile.speed)
-            projectile.setFlipX(false)
-            centerX += 10
-        }else {
-            projectile.speed = -Math.abs(projectile.speed)
-            projectile.setFlipX(true)
-            centerX -= 10
+        
+        // When latdirection is called from class that is instance of Enemy, typescript returns error
+        // So I have to check if lastDirection is in initiator
+        if('lastDirection' in initiator) {
+            if(initiator.lastDirection == Phaser.Physics.Arcade.FACING_RIGHT) {
+                projectile.speed = Math.abs(projectile.speed)
+                projectile.setFlipX(false)
+                centerX += 10
+            }else {
+                projectile.speed = -Math.abs(projectile.speed)
+                projectile.setFlipX(true)
+                centerX -= 10
+            }
+    
+            projectile.fire(centerX, center.y)
+            this.timeFromLastProjectile = getTimestamp()
         }
-
-        projectile.fire(centerX, center.y)
-        this.timeFromLastProjectile = getTimestamp()
     }
 }
