@@ -8,8 +8,8 @@ export default class EffectManager {
         this.scene = scene
     }
 
-    playEffectOn(effectName: string, target: Enemy){
-        const effect = new SpriteEffect(this.scene, 0, 0, effectName)
+    playEffectOn(effectName: string, target: Enemy, impactPosition: { x: number, y: number }){
+        const effect = new SpriteEffect(this.scene, 0, 0, effectName, impactPosition)
         effect.playOn(target)
     }
 }
