@@ -4,6 +4,8 @@ import Enemies from "../groups/Enemies"
 import Enemy from "../entities/Enemy"
 import Projectile from "../attacks/Projectile"
 
+import initAnims from "../anims"
+
 class PlayScene extends GameScene {
    
     map: Phaser.Tilemaps.Tilemap
@@ -38,7 +40,7 @@ class PlayScene extends GameScene {
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
-
+        initAnims(this.anims)
     } 
 
 
