@@ -6,6 +6,7 @@ import anims from "../mixins/anims"
 import Enemy from "./Enemy"
 import Projectiles from "../attacks/Projectiles"
 import MeleWeapon from "../attacks/MeleWeapon"
+import { getTimestamp } from "../utils/functions"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -26,6 +27,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     projectiles : Projectiles
     meleWeapon: MeleWeapon
+    timeFromLastSwing: number
 
     lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT
 
@@ -66,8 +68,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         })
 
         this.scene.input.keyboard.on('keydown-E', () => {
+            if(this.timeFromLastSwing && 
+                this.meleWeapon.attackSpeed + this.timeFromLastSwing > getTimestamp()) return
+            
             this.play('throw', true)
             this.meleWeapon.swing(this)
+            this.timeFromLastSwing = getTimestamp()
         })
 
     }

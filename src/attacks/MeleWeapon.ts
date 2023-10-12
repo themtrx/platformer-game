@@ -7,7 +7,7 @@ export default class MeleWeapon extends Phaser.Physics.Arcade.Sprite {
     scene: GameScene
 
     damage: number = 15
-    attackSpeed: number = 1000
+    attackSpeed: number = 500
     weaponName: string
     wielder: Player
     weaponAnim: string
