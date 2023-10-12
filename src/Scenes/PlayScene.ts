@@ -35,8 +35,8 @@ class PlayScene extends GameScene {
         this.createLayers()
         this.getPlayerZones()
         this.createPlayer()
-        this.createPlayerColliders()
         this.createEnemies()
+        this.createPlayerColliders()
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
@@ -92,7 +92,9 @@ class PlayScene extends GameScene {
     }
 
     createPlayerColliders() {
-        this.player.addCollider(this.platformCollider)
+        this.player
+            .addCollider(this.platformCollider)
+            .addCollider(this.enemies.getProjectiles(), this.onWeaponHit)
     }
 
     createEnemies() {

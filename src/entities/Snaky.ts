@@ -32,6 +32,9 @@ export default class Snaky extends Enemy {
     update(time: number, delta:number){
         super.update(time, delta)
 
+        if(!this.active) return
+        if(this.isPlayingAnims('snaky-hurt')) return
+
         if(this.body.velocity.x > 0) {
             this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT
         }else {
@@ -43,9 +46,6 @@ export default class Snaky extends Enemy {
             this.timeFromLastAttack = time
             this.attackDelay = this.getAttackDelay()
         }
-
-        if(!this.active) return
-        if(this.isPlayingAnims('snaky-hurt')) return
 
         this.play('snaky-walk', true)
     }
