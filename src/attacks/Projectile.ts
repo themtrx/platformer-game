@@ -1,4 +1,5 @@
 import { GameScene } from "../Scenes/GameScene";
+import Enemy from "../entities/Enemy";
 
 export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     scene: GameScene
@@ -23,17 +24,26 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.traveledDistance += this.body.deltaAbsX()
 
         if(this.isOutOfRange()) {
-            this.setActive(false)
-            this.setVisible(false)
+            this.activateProjectile(false)
             this.traveledDistance = 0
         }
     }
 
     fire(x: number, y: number) {
-        this.setActive(true)
-        this.setVisible(true)
+        this.activateProjectile(true)
         this.body.reset(x, y)
         this.setVelocityX(this.speed)
+    }
+
+    deliversHit(target: Enemy) {
+        this.activateProjectile(false)
+        this.traveledDistance = 0
+        this.body.reset(0, 0)
+    }
+
+    activateProjectile(isActive: boolean) {
+        this.setActive(isActive)
+        this.setVisible(isActive)
     }
 
     isOutOfRange() {
