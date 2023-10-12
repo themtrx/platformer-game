@@ -1,6 +1,7 @@
 import { GameScene } from "../Scenes/GameScene";
 import Projectile from "../attacks/Projectile";
 import collidable from "../mixins/collidable";
+import anims from "../mixins/anims"
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
@@ -22,6 +23,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
                 options?:{ raylenght?: number, precision?: number, steepnes?: number }) => {
                         ray: Phaser.Geom.Line; hasHit: boolean; 
                     }
+    isPlayingAnims: (key: string) => boolean
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key)
@@ -30,6 +32,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
 
         Object.assign(this, collidable)
+        Object.assign(this, anims)
 
         this.init()
         this.initEvents()
@@ -92,8 +95,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         source.deliversHit(this)
         source.setActive(false)
         source.setVisible(false)
-        console.log('takes hit')
-        
+
         if(this.health <= 0){
             console.log('Enemy is terminated')
         }

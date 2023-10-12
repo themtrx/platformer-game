@@ -7,4 +7,11 @@ export default (anims: Phaser.Animations.AnimationManager) => {
         repeat: -1
     })
 
+    anims.create({
+        key: 'birdman-hurt',
+        frames: anims.generateFrameNumbers('birdman', { start: 25, end: 26 }),
+        frameRate: 5,
+        repeat: 0
+    })
+
 }
