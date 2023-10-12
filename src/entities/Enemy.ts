@@ -97,7 +97,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         source.setVisible(false)
 
         if(this.health <= 0){
-            console.log('Enemy is terminated')
+            this.setTint(0xff0000)
+            this.setVelocity(0, -200)
+            this.body.checkCollision.none = true
+            this.setCollideWorldBounds(false)
         }
     }
 }
