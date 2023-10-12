@@ -14,10 +14,16 @@ export default class SpriteEffect extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
 
         this.effectName = effectName
+
+        this.on('animationcomplete', (animation: Phaser.Animations.Animation) => {
+            if(animation.key == this.effectName){
+                this.destroy()
+            }
+        }, this)
     }
 
     placeEffect() {
-        if(!this.target) return
+        if(!this.target || !this.body) return
 
         const center = this.target.getCenter()
         this.body.reset(center.x, center.y)
