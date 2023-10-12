@@ -16,6 +16,9 @@ export default class Snaky extends Enemy {
         super.init()
 
         this.health = 60
+
+        this.setSize(12, 45)
+        this.setOffset(10, 15)
     }
 
     update(time: number, delta:number){
