@@ -14,8 +14,10 @@ export default class Birdman extends Enemy {
 
     update(time: number, delta:number){
         super.update(time, delta)
-        if(this.isPlayingAnims('birdman-hurt')) return
         
+        if(!this.active) return
+        if(this.isPlayingAnims('birdman-hurt')) return
+
         this.play('birdman-idle', true)
     }
 
