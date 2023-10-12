@@ -59,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         initAnimations(this.scene.anims)
 
-        this.projectiles = new Projectiles(this.scene)
+        this.projectiles = new Projectiles(this.scene, 'iceball')
         this.meleWeapon = new MeleWeapon(this.scene, 0, 0, 'sword-default')
 
         this.scene.input.keyboard.on('keydown-Q', () => {

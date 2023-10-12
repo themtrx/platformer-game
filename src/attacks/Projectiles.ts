@@ -2,23 +2,24 @@ import { GameScene } from "../Scenes/GameScene"
 import Player from "../entities/Player"
 import Projectile from "./Projectile"
 import { getTimestamp } from "../utils/functions"
+import Enemy from "../entities/Enemy"
 
 export default class Projectiles extends Phaser.Physics.Arcade.Group {
     timeFromLastProjectile: Number
 
-    constructor(scene: GameScene) {
+    constructor(scene: GameScene, key: string) {
         super(scene.physics.world, scene)
 
         this.createMultiple({
             frameQuantity: 5,
             active: false,
             visible: false,
-            key: 'iceball',
+            key,
             classType: Projectile
         })
     }
 
-    fireProjectile(initiator: Player) {
+    fireProjectile(initiator: Player | Enemy) {
         const projectile = this.getFirstDead(false)
 
         if(!projectile) return
