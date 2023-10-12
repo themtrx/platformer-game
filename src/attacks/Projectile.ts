@@ -34,10 +34,12 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    fire(x: number, y: number) {
+    fire(x: number, y: number, anim?: string) {
         this.activateProjectile(true)
         this.body.reset(x, y)
         this.setVelocityX(this.speed)
+
+        anim && this.play(anim, true)
     }
 
     deliversHit(target: Enemy) {

@@ -39,7 +39,7 @@ export default class Snaky extends Enemy {
         }
         
         if(this.timeFromLastAttack + this.attackDelay <= time){
-            this.projectiles.fireProjectile(this)
+            this.projectiles.fireProjectile(this, 'fireball')
             this.timeFromLastAttack = time
             this.attackDelay = this.getAttackDelay()
         }
