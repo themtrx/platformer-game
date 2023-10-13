@@ -16,6 +16,8 @@ class PlayScene extends GameScene {
     playerZones: Phaser.Tilemaps.ObjectLayer
     startZone: Phaser.Types.Tilemaps.TiledObject
     endZone: Phaser.Types.Tilemaps.TiledObject
+    collectables: Phaser.Tilemaps.ObjectLayer
+    collectablesGroup: Phaser.Physics.Arcade.StaticGroup
 
     player: Player
     enemies: Enemies
@@ -40,6 +42,7 @@ class PlayScene extends GameScene {
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
+        this.createCollectables()
         initAnims(this.anims)
     } 
 
@@ -73,10 +76,11 @@ class PlayScene extends GameScene {
         const tileset1 = this.map.getTileset("main_lev_build_1")
 
         this.platformCollider = this.map.createLayer("platform_colliders", tileset1)
-        this.environment = this.map.createLayer("environment", tileset1)
+        this.environment = this.map.createLayer("environment", tileset1).setDepth(-2)
         this.platforms = this.map.createLayer("platforms", tileset1)
         this.playerZones = this.map.getObjectLayer("player_zones")
         this.enemySpawns = this.map.getObjectLayer("enemy_spawns")
+        this.collectables = this.map.getObjectLayer("collectables")
 
         this.platformCollider.setCollisionByProperty({ collides: true })
     }
@@ -146,6 +150,14 @@ class PlayScene extends GameScene {
         const endOverlap = this.physics.add.overlap(this.player, endOfLevel, () => {
             endOverlap.active = false
             console.log("You won!")
+        })
+    }
+
+    createCollectables () {
+        this.collectablesGroup = this.physics.add.staticGroup()
+
+        this.collectables.objects.forEach((collectable) => {
+            this.collectablesGroup.get(collectable.x, collectable.y, 'diamond').setDepth(-1)
         })
     }
 
