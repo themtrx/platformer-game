@@ -302,24 +302,6 @@
                  "width":0,
                  "x":1152,
                  "y":224
-                }, 
-                {
-                 "height":0,
-                 "id":11,
-                 "name":"Spawn",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"Snaky"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":288,
-                 "y":304
                 }],
          "opacity":1,
          "type":"objectgroup",
