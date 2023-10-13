@@ -5,6 +5,7 @@ import Enemy from "../entities/Enemy"
 import Projectile from "../attacks/Projectile"
 
 import initAnims from "../anims"
+import Collectable from "../collectables/Collectable"
 
 class PlayScene extends GameScene {
    
@@ -161,10 +162,11 @@ class PlayScene extends GameScene {
     }
 
     createCollectables () {
-        this.collectablesGroup = this.physics.add.staticGroup()
+        this.collectablesGroup = this.physics.add.staticGroup().setDepth(-1)
 
         this.collectables.objects.forEach((collectable) => {
-            this.collectablesGroup.get(collectable.x, collectable.y, 'diamond').setDepth(-1)
+            this.collectablesGroup.add(new Collectable(this, collectable.x, collectable.y, 'diamond'))
+            // this.collectablesGroup.get(collectable.x, collectable.y, 'diamond').setDepth(-1)
         })
 
         this.collectablesGroup.playAnimation('diamond-shine')
