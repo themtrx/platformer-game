@@ -25,6 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     hasBeenHit: boolean = false
     bounceVelocity: number = 200
+    isSliding: boolean = false
 
     projectiles : Projectiles
     meleWeapon: MeleWeapon
@@ -59,24 +60,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setSize(20, 36)
 
         initAnimations(this.scene.anims)
+        
+        this.handleAttacks()
+        this.handleMovements()
 
         this.projectiles = new Projectiles(this.scene, 'iceball-1')
         this.meleWeapon = new MeleWeapon(this.scene, 0, 0, 'sword-default')
-
-        this.scene.input.keyboard.on('keydown-Q', () => {
-            this.play('throw', true)
-            this.projectiles.fireProjectile(this, 'iceball')
-        })
-
-        this.scene.input.keyboard.on('keydown-E', () => {
-            if(this.timeFromLastSwing && 
-                this.meleWeapon.attackSpeed + this.timeFromLastSwing > getTimestamp()) return
-            
-            this.play('throw', true)
-            this.meleWeapon.swing(this)
-            this.timeFromLastSwing = getTimestamp()
-        })
-
     }
 
     initEvents(){
@@ -84,23 +73,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if(this.hasBeenHit) return
+        if(this.hasBeenHit || this.isSliding) return
 
         const { left, right, space, down } = this.cursors
         const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space)
         const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor()
         
-        if(down.isDown && onFloor){
-            this.body.setSize(this.width, this.height / 2)
-            this.setOffset(0, this.height / 2)
-            this.setVelocityX(0)
-            
-            this.play('slide', true)
-        }else {
-            this.body.setSize(this.width, this.height)
-            this.setOffset(0, 0)
-        }
-
         if(left.isDown){
             this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT
             this.setVelocityX(-this.playerSpeed)
@@ -128,6 +106,41 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.body.velocity.x != 0 ?
                 this.play('run', true) : this.play('idle', true) :
             this.play('jump', true)
+    }
+
+    handleAttacks() {
+        this.scene.input.keyboard.on('keydown-Q', () => {
+            this.play('throw', true)
+            this.projectiles.fireProjectile(this, 'iceball')
+        })
+
+        this.scene.input.keyboard.on('keydown-E', () => {
+            if(this.timeFromLastSwing && 
+                this.meleWeapon.attackSpeed + this.timeFromLastSwing > getTimestamp()) return
+            
+            this.play('throw', true)
+            this.meleWeapon.swing(this)
+            this.timeFromLastSwing = getTimestamp()
+        })
+    }
+
+    handleMovements() {
+        this.scene.input.keyboard.on('keydown-DOWN', () => {
+            if(!(this.body as Phaser.Physics.Arcade.Body).onFloor()) return
+            
+            this.body.setSize(this.width, this.height / 2)
+            this.setOffset(0, this.height / 2)
+            this.setVelocityX(0)
+
+            this.play('slide', true)
+            this.isSliding = true
+        })
+
+        this.scene.input.keyboard.on('keyup-DOWN', () => {
+            this.body.setSize(this.width, this.height)
+            this.setOffset(0, 0)
+            this.isSliding = false
+        })
     }
 
     playDamageTween() {
