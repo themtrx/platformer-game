@@ -162,12 +162,9 @@ class PlayScene extends GameScene {
     }
 
     createCollectables () {
-        this.collectablesGroup = new Collectables(this, 'diamond').setDepth(-1)
+        this.collectablesGroup = new Collectables(this, 'diamond').setDepth(-1);
 
-        this.collectables.objects.forEach((collectable) => {
-            // this.collectablesGroup.add(new Collectable(this, collectable.x, collectable.y, 'diamond'))
-            this.collectablesGroup.get(collectable.x, collectable.y, 'diamond')
-        })
+        (this.collectablesGroup as Collectables).addFromLayer(this.collectables)
 
         this.collectablesGroup.playAnimation('diamond-shine')
     }
