@@ -34,16 +34,16 @@ class PlayScene extends GameScene {
 
     create() {
         this.createMap()
+        initAnims(this.anims)
         this.createLayers()
         this.getPlayerZones()
         this.createPlayer()
         this.createEnemies()
+        this.createCollectables()
         this.createPlayerColliders()
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
-        this.createCollectables()
-        initAnims(this.anims)
     } 
 
 
@@ -65,6 +65,12 @@ class PlayScene extends GameScene {
     }
 
     update(time: number, delta: number) {
+    }
+
+    onCollect(entity: Enemy, collectable: Phaser.Physics.Arcade.Sprite) {
+        //@param disableGameObject - this will deactivate the object, default is false
+        //@param hideGameObject - this will hide the object, default is false
+        collectable.disableBody(true, true)
     }
 
     createMap() {
@@ -99,6 +105,7 @@ class PlayScene extends GameScene {
         this.player
             .addCollider(this.platformCollider)
             .addCollider(this.enemies.getProjectiles(), this.onWeaponHit)
+            .addOverlap(this.collectablesGroup, this.onCollect, this)
     }
 
     createEnemies() {
@@ -159,6 +166,8 @@ class PlayScene extends GameScene {
         this.collectables.objects.forEach((collectable) => {
             this.collectablesGroup.get(collectable.x, collectable.y, 'diamond').setDepth(-1)
         })
+
+        this.collectablesGroup.playAnimation('diamond-shine')
     }
 
 }

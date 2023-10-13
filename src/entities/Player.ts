@@ -35,6 +35,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     isPlayingAnims: (animsKey: string) => boolean
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
+    addOverlap: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     
     constructor(scene: GameScene, x: number, y: number){
         super(scene, x, y, 'player')

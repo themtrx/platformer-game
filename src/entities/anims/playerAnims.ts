@@ -30,7 +30,7 @@ export default (anims: Phaser.Animations.AnimationManager) => {
 
     anims.create({
         key: 'slide',
-        frames: anims.generateFrameNumbers('player-slide-sheet', { start: 0, end: 3 }),
+        frames: anims.generateFrameNumbers('player-slide-sheet', { start: 0, end: 2 }),
         frameRate: 20,
         repeat: 0
     })
