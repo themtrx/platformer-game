@@ -13,6 +13,7 @@ class PlayScene extends GameScene {
    
     map: Phaser.Tilemaps.Tilemap
     platforms: Phaser.Tilemaps.TilemapLayer
+    traps: Phaser.Tilemaps.TilemapLayer
     platformCollider: Phaser.Tilemaps.TilemapLayer
     environment: Phaser.Tilemaps.TilemapLayer
 
@@ -89,8 +90,10 @@ class PlayScene extends GameScene {
         this.playerZones = this.map.getObjectLayer("player_zones")
         this.enemySpawns = this.map.getObjectLayer("enemy_spawns")
         this.collectables = this.map.getObjectLayer("collectables")
+        this.traps = this.platforms = this.map.createLayer("traps", tileset1)
 
         this.platformCollider.setCollisionByProperty({ collides: true })
+        this.traps.setCollisionByExclusion([-1])
     }
 
     getPlayerZones() {
@@ -108,6 +111,7 @@ class PlayScene extends GameScene {
             .addCollider(this.platformCollider)
             .addCollider(this.enemies.getProjectiles(), this.onWeaponHit)
             .addOverlap(this.collectablesGroup, this.onCollect, this)
+            .addCollider(this.traps, this.onTrapCollision)
     }
 
     onCollect(entity: Enemy | Player, collectable: Phaser.Physics.Arcade.Sprite) {
@@ -117,6 +121,10 @@ class PlayScene extends GameScene {
         this.hud.updateScoreBoard(this.score)
         //@param hideGameObject - this will hide the object, default is false
         collectable.disableBody(true, true)
+    }
+
+    onTrapCollision(entity: Player, collectable: Phaser.Physics.Arcade.Sprite) {
+        console.log("You died!")
     }
 
     createEnemies() {
