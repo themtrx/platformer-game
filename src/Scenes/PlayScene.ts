@@ -109,9 +109,9 @@ class PlayScene extends GameScene {
     createPlayerColliders() {
         this.player
             .addCollider(this.platformCollider)
-            .addCollider(this.enemies.getProjectiles(), this.onWeaponHit)
+            .addCollider(this.enemies.getProjectiles(), this.onHit)
             .addOverlap(this.collectablesGroup, this.onCollect, this)
-            .addCollider(this.traps, this.onTrapCollision)
+            .addCollider(this.traps, this.onHit)
     }
 
     onCollect(entity: Enemy | Player, collectable: Phaser.Physics.Arcade.Sprite) {
@@ -121,10 +121,6 @@ class PlayScene extends GameScene {
         this.hud.updateScoreBoard(this.score)
         //@param hideGameObject - this will hide the object, default is false
         collectable.disableBody(true, true)
-    }
-
-    onTrapCollision(entity: Player, collectable: Phaser.Physics.Arcade.Sprite) {
-        console.log("You died!")
     }
 
     createEnemies() {
@@ -149,7 +145,7 @@ class PlayScene extends GameScene {
         player.takesHit(enemy)
     }
 
-    onWeaponHit(entity: Enemy, source: Projectile) {
+    onHit(entity: Enemy, source: Projectile) {
         entity.takesHit(source)
     }
 
@@ -157,8 +153,8 @@ class PlayScene extends GameScene {
         this.enemies
                 .addCollider(this.platformCollider)
                 .addCollider(this.player, this.onPlayerCollision)
-                .addCollider(this.player.projectiles, this.onWeaponHit)
-                .addOverlap(this.player.meleWeapon, this.onWeaponHit)
+                .addCollider(this.player.projectiles, this.onHit)
+                .addOverlap(this.player.meleWeapon, this.onHit)
     }
 
     setUpFollowupCameraOn() {
