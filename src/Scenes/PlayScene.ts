@@ -31,6 +31,7 @@ class PlayScene extends GameScene {
     line: Phaser.Geom.Line
     tileHits: Phaser.Tilemaps.Tile[]
 
+    hud: Hud
     score: number = 0
 
     constructor() {
@@ -38,6 +39,8 @@ class PlayScene extends GameScene {
     }
 
     create() {
+        this.hud = new Hud(this, 0, 0)
+
         this.createMap()
         initAnims(this.anims)
         this.createLayers()
@@ -47,7 +50,6 @@ class PlayScene extends GameScene {
         this.createCollectables()
         this.createPlayerColliders()
         this.createEnemiesColliders()
-        this.createHud()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
     } 
@@ -71,10 +73,6 @@ class PlayScene extends GameScene {
     }
 
     update(time: number, delta: number) {
-    }
-
-    createHud() {
-        new Hud(this, 0, 0)
     }
 
     createMap() {
@@ -116,7 +114,7 @@ class PlayScene extends GameScene {
         if (!collectable.visible) return
 
         this.score += (collectable as Collectable).score
-        console.log(this.score)
+        this.hud.updateScoreBoard(this.score)
         //@param hideGameObject - this will hide the object, default is false
         collectable.disableBody(true, true)
     }
