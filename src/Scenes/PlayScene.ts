@@ -6,6 +6,7 @@ import Projectile from "../attacks/Projectile"
 
 import initAnims from "../anims"
 import Collectables from "../groups/Collectables"
+import Collectable from "../collectables/Collectable"
 
 class PlayScene extends GameScene {
    
@@ -28,6 +29,8 @@ class PlayScene extends GameScene {
     graphics: Phaser.GameObjects.Graphics
     line: Phaser.Geom.Line
     tileHits: Phaser.Tilemaps.Tile[]
+
+    score: number = 0
 
     constructor() {
         super("PlayScene")
@@ -68,12 +71,6 @@ class PlayScene extends GameScene {
     update(time: number, delta: number) {
     }
 
-    onCollect(entity: Enemy, collectable: Phaser.Physics.Arcade.Sprite) {
-        //@param disableGameObject - this will deactivate the object, default is false
-        //@param hideGameObject - this will hide the object, default is false
-        collectable.disableBody(true, true)
-    }
-
     createMap() {
         this.map = this.make.tilemap({ key: "map" })
         this.map.addTilesetImage("main_lev_build_1", "tiles-1")
@@ -107,6 +104,15 @@ class PlayScene extends GameScene {
             .addCollider(this.platformCollider)
             .addCollider(this.enemies.getProjectiles(), this.onWeaponHit)
             .addOverlap(this.collectablesGroup, this.onCollect, this)
+    }
+
+    onCollect(entity: Enemy | Player, collectable: Phaser.Physics.Arcade.Sprite) {
+        if (!collectable.visible) return
+
+        this.score += (collectable as Collectable).score
+        console.log(this.score)
+        //@param hideGameObject - this will hide the object, default is false
+        collectable.disableBody(true, true)
     }
 
     createEnemies() {
@@ -163,7 +169,7 @@ class PlayScene extends GameScene {
 
     createCollectables () {
         this.collectablesGroup = new Collectables(this, 'diamond').setDepth(-1);
-
+       
         (this.collectablesGroup as Collectables).addFromLayer(this.collectables)
 
         this.collectablesGroup.playAnimation('diamond-shine')

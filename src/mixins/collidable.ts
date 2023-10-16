@@ -1,12 +1,12 @@
 import Phaser from "phaser"
 
 export default {
-    addCollider(otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) {
-        this.scene.physics.add.collider(this, otherGameObject, callback, null, this)
+    addCollider(otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, context?: Phaser.Scene) {
+        this.scene.physics.add.collider(this, otherGameObject, callback, null, context || this)
         return this
     },
-    addOverlap(otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) {
-        this.scene.physics.add.overlap(this, otherGameObject, callback, null, this)
+    addOverlap(otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, context?: Phaser.Scene) {
+        this.scene.physics.add.overlap(this, otherGameObject, callback, null, context || this)
         return this
     },
     bodyPoisitionDifferenceX: 0,

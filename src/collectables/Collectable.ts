@@ -9,11 +9,10 @@ export default class Collectable extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, key)
 
         scene.add.existing(this)
-        scene.physics.add.existing(this)
 
         this.scene = scene
 
-        scene.tweens.add({
+        this.scene.tweens.add({
             targets: this,
             y: this.y - 3,
             duration: Phaser.Math.Between(1500, 2500),

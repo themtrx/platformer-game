@@ -9,22 +9,19 @@ interface LayerProperties {
 export default class Collectables extends Phaser.Physics.Arcade.StaticGroup {
     scene: GameScene
 
-    score: number = 1
-
     constructor(scene: GameScene, key: string) {
         super(scene.physics.world, scene)
-
         this.scene = scene
         this.setOrigin(0, 1)
 
         this.createFromConfig({
-            key,
+            key: 'diamonds',
             classType: Collectable
         })
     }
 
     mapProperties(propertiesList: object[]): LayerProperties {
-        if(!propertiesList || propertiesList.length == 0) return
+        if(!propertiesList || propertiesList.length == 0) return {}
 
         return propertiesList.reduce((map: {[key: string] : string}, obj: {[name: string]: string}) => {
             map[obj.name] = obj.value
