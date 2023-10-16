@@ -7,6 +7,7 @@ import Projectile from "../attacks/Projectile"
 import initAnims from "../anims"
 import Collectables from "../groups/Collectables"
 import Collectable from "../collectables/Collectable"
+import Hud from "../hud"
 
 class PlayScene extends GameScene {
    
@@ -46,6 +47,7 @@ class PlayScene extends GameScene {
         this.createCollectables()
         this.createPlayerColliders()
         this.createEnemiesColliders()
+        this.createHud()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
     } 
@@ -69,6 +71,10 @@ class PlayScene extends GameScene {
     }
 
     update(time: number, delta: number) {
+    }
+
+    createHud() {
+        new Hud(this, 0, 0)
     }
 
     createMap() {
