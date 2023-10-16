@@ -9,10 +9,13 @@ interface LayerProperties {
 export default class Collectables extends Phaser.Physics.Arcade.StaticGroup {
     scene: GameScene
 
+    score: number = 1
+
     constructor(scene: GameScene, key: string) {
         super(scene.physics.world, scene)
 
         this.scene = scene
+        this.setOrigin(0, 1)
 
         this.createFromConfig({
             key,
@@ -21,7 +24,7 @@ export default class Collectables extends Phaser.Physics.Arcade.StaticGroup {
     }
 
     mapProperties(propertiesList: object[]): LayerProperties {
-        if(propertiesList && propertiesList.length == 0) return
+        if(!propertiesList || propertiesList.length == 0) return
 
         return propertiesList.reduce((map: {[key: string] : string}, obj: {[name: string]: string}) => {
             map[obj.name] = obj.value
@@ -30,10 +33,13 @@ export default class Collectables extends Phaser.Physics.Arcade.StaticGroup {
     }
 
     addFromLayer(layer: Phaser.Tilemaps.ObjectLayer){
-        const properties: LayerProperties = this.mapProperties(layer.properties as object[])
+        const {score: defaultScore, type}: LayerProperties = this.mapProperties(layer.properties as object[])
 
-        layer.objects.forEach((collectable) => {
-            this.get(collectable.x, collectable.y, properties.type)
+        layer.objects.forEach((collectableObj) => {
+            const collectable = this.get(collectableObj.x, collectableObj.y, type)
+            const props = this.mapProperties(collectableObj.properties)
+
+            collectable.score = props && props.score ? props.score : defaultScore
         })
     }
 }
