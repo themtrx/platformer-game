@@ -59,9 +59,14 @@ class PreloadScene extends Phaser.Scene {
         this.load.spritesheet('sword-default', "weapons/sword_sheet_1.png", {
             frameWidth: 52, frameHeight: 32, spacing: 15
         })
+
+        this.load.once('complete', () => {
+            this.startGame()
+        })
     }
 
-    create() {
+    startGame() {
+        this.registry.set('level', 1)
         this.scene.start("PlayScene")
     }
 }

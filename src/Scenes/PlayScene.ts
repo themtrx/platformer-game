@@ -87,7 +87,7 @@ class PlayScene extends GameScene {
     }
 
     createMap() {
-        this.map = this.make.tilemap({ key: "level-1" })
+        this.map = this.make.tilemap({ key: `level-${this.getCurrentLevel()}` })
         this.map.addTilesetImage("main_lev_build_1", "tiles-1")
         this.map.addTilesetImage("bg_spikes_tileset", "bg-spikes-tileset")
     }
@@ -129,6 +129,10 @@ class PlayScene extends GameScene {
       this.startZone = this.playerZones.objects.find(object => object.name == "startZone")
       this.endZone = this.playerZones.objects.find(object => object.name == "endZone")
 
+    }
+
+    getCurrentLevel() {
+        return this.registry.get('level') || 1
     }
 
     createPlayer() {
@@ -206,7 +210,8 @@ class PlayScene extends GameScene {
 
         const endOverlap = this.physics.add.overlap(this.player, endOfLevel, () => {
             endOverlap.active = false
-            console.log("You won!")
+            this.registry.inc('level', 1)
+            this.scene.restart({gameStatus: 'LEVEL_COMPLETED'})
         })
     }
 
