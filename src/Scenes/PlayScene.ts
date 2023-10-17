@@ -223,7 +223,14 @@ class PlayScene extends GameScene {
 
         const endOverlap = this.physics.add.overlap(this.player, endOfLevel, () => {
             endOverlap.active = false
+
+            if(this.registry.get('level') == this.lastLevel) {
+                this.scene.start('CreditScene')
+                return  
+            }
+        
             this.registry.inc('level', 1)
+            this.registry.inc('unlocked-levels', 1)
             this.scene.restart({gameStatus: 'LEVEL_COMPLETED'})
         })
     }

@@ -4,6 +4,7 @@ import PreloadScene from "./Scenes/PreloadScene"
 import PlayScene from "./Scenes/PlayScene"
 import MenuScene from "./Scenes/MenuScene"
 import LevelScene from "./Scenes/LevelScene"
+import CreditScene from "./Scenes/CreditScene";
 
 const WIDTH = document.body.offsetWidth
 const HEIGHT = 600
@@ -21,7 +22,7 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: false
     }
   },
-  scene: [ PreloadScene, MenuScene, LevelScene, PlayScene ]
+  scene: [ PreloadScene, MenuScene, LevelScene, PlayScene, CreditScene ]
 };
 
 new Phaser.Game(config)

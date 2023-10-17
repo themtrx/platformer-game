@@ -6,6 +6,7 @@ export class GameScene extends Phaser.Scene {
 
     canGoBack: boolean = false
     menu: Object[]
+    lastLevel: number = 2
 
     get gameWidth() {
         return this.game.config.width as number
