@@ -46,6 +46,7 @@ class PlayScene extends GameScene {
     create(data: any) {
         this.hud = new Hud(this, 0, 0)
 
+        this.playBGMusic()
         this.createMap()
         initAnims(this.anims)
         this.createLayers()
@@ -64,6 +65,10 @@ class PlayScene extends GameScene {
         this.createGameEvents()
     } 
 
+    playBGMusic() {
+        if(this.sound.get('theme')) return
+        this.sound.add('theme', { loop: true, volume: 0.03 }).play()
+    }
 
     finishDrawing(pointer: Phaser.Input.Pointer) {
         this.line.x2 = pointer.worldX

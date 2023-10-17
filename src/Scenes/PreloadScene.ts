@@ -62,6 +62,8 @@ class PreloadScene extends Phaser.Scene {
             frameWidth: 52, frameHeight: 32, spacing: 15
         })
 
+        this.load.audio('theme', 'music/theme_music.wav')
+
         this.load.once('complete', () => {
             this.startGame()
         })
