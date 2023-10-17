@@ -17,7 +17,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     gravity: number = 500
     playerSpeed: number = 150
 
-    health: number = 100
+    health: number = 30
     hp: Healthbar
 
     jumpCount: number = 0
@@ -74,7 +74,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if(this.hasBeenHit || this.isSliding) return
+        if(this.hasBeenHit || this.isSliding || !this.body) return
 
         const { left, right, space, down } = this.cursors
         const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space)

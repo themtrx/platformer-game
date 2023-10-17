@@ -40,7 +40,7 @@ class PlayScene extends GameScene {
         super("PlayScene")
     }
 
-    create() {
+    create(data: any) {
         this.hud = new Hud(this, 0, 0)
 
         this.createMap()
@@ -50,13 +50,13 @@ class PlayScene extends GameScene {
         this.createPlayer()
         this.createEnemies()
         this.createCollectables()
-
-        this.createGameEvents()
-
         this.createPlayerColliders()
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
+
+        if(data.gameStatus == 'PLAYER_LOOSE') return
+        this.createGameEvents()
     } 
 
 
@@ -112,7 +112,7 @@ class PlayScene extends GameScene {
     
     createGameEvents() {
         EventEmitter.on('PLAYER_LOOSE', () => {
-            alert("You loose!")
+            this.scene.restart({gameStatus: 'PLAYER_LOOSE'})
         })
     }
 
