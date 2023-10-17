@@ -47,6 +47,16 @@ export class GameScene extends Phaser.Scene {
         return { x, y }
     }
 
+    get rightBottimCorner() {
+        const widhtByZoom = this.gameWidth / this.zoomFactor
+        const heightByZoom = this.gameHeight / this.zoomFactor
+
+        const x = widhtByZoom + ((this.gameWidth - widhtByZoom) / 2)
+        const y = heightByZoom + ((this.gameHeight - heightByZoom) / 2)
+
+        return { x, y }
+    }
+
     constructor(key: string){
         super(key)
     }

@@ -58,6 +58,7 @@ class PlayScene extends GameScene {
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
         this.createBG()
+        this.createBackBtn()
 
         if(data.gameStatus == 'PLAYER_LOOSE') return
         this.createGameEvents()
@@ -123,6 +124,18 @@ class PlayScene extends GameScene {
             .setDepth(-11)
             .setScale(1.2)
             .setScrollFactor(0, 1)
+    }
+
+    createBackBtn() {
+        const btn = this.add.image(this.rightBottimCorner.x, this.rightBottimCorner.y, 'back')
+            .setScrollFactor(0)
+            .setScale(2)
+            .setInteractive()
+            .setOrigin(1)
+
+        btn.on('pointerup', () => {
+            this.scene.start('MenuScene')
+        })
     }
 
     getPlayerZones() {
