@@ -11,6 +11,7 @@ class PreloadScene extends Phaser.Scene {
 
         this.load.image('bg_spikes_dark', 'bg_spikes_dark.png')
         this.load.image('sky_play', 'sky_play.png')
+        this.load.image('menu-bg', 'background01.png')
         this.load.image('bg-spikes-tileset', 'bg_spikes_tileset.png')
 
         this.load.image("tiles-1", "main_lev_build_1.png")
@@ -67,7 +68,7 @@ class PreloadScene extends Phaser.Scene {
 
     startGame() {
         this.registry.set('level', 1)
-        this.scene.start("PlayScene")
+        this.scene.start("MenuScene")
     }
 }
 

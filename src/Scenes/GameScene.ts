@@ -4,6 +4,8 @@ export class GameScene extends Phaser.Scene {
     isGameRunning: boolean = false
     zoomFactor: number = 1.5
 
+    canGoBack: boolean = false
+
     get gameWidth() {
         return this.game.config.width as number
     }
