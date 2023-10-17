@@ -8,6 +8,7 @@ import initAnims from "../anims"
 import Collectables from "../groups/Collectables"
 import Collectable from "../collectables/Collectable"
 import Hud from "../hud"
+import EventEmitter from "../events/Emitter"
 
 class PlayScene extends GameScene {
    
@@ -49,6 +50,9 @@ class PlayScene extends GameScene {
         this.createPlayer()
         this.createEnemies()
         this.createCollectables()
+
+        this.createGameEvents()
+
         this.createPlayerColliders()
         this.createEnemiesColliders()
         this.createEndOfLevel()
@@ -104,6 +108,12 @@ class PlayScene extends GameScene {
 
     createPlayer() {
         this.player = new Player(this, this.startZone.x, this.startZone.y)
+    }
+    
+    createGameEvents() {
+        EventEmitter.on('PLAYER_LOOSE', () => {
+            alert("You loose!")
+        })
     }
 
     createPlayerColliders() {

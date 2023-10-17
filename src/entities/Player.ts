@@ -7,7 +7,7 @@ import Enemy from "./Enemy"
 import Projectiles from "../attacks/Projectiles"
 import MeleWeapon from "../attacks/MeleWeapon"
 import { getTimestamp } from "../utils/functions"
-import Projectile from "../attacks/Projectile"
+import EventEmitter from "../events/Emitter"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -170,17 +170,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     takesHit(source: any) {
         if(this.hasBeenHit) return
 
+        this.health -= source.damage || source.properties.damage || 0
+
+        if(this.health <= 0){
+            EventEmitter.emit('PLAYER_LOOSE')  
+            this.hasBeenHit = false
+            return
+        }
+
         this.hasBeenHit = true
         this.bounceOff(source)
         const hitAnim = this.playDamageTween()
-
-        this.health -= source.damage || source.properties.damage || 0
+        
         this.hp.decrease(this.health)
 
         if('deliversHit' in source){
             source.deliversHit(this)
         }
-
+        
         this.scene.time.delayedCall(1000, () => {
             this.hasBeenHit = false
             hitAnim.stop()
