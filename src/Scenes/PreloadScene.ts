@@ -63,6 +63,11 @@ class PreloadScene extends Phaser.Scene {
         })
 
         this.load.audio('theme', 'music/theme_music.wav')
+        this.load.audio('projectile-launch', 'music/projectile_launch.wav')
+        this.load.audio('step', 'music/step_mud.wav')
+        this.load.audio('jump', 'music/jump.wav')
+        this.load.audio('swipe', 'music/swipe.wav')
+        this.load.audio('coin-pickup', 'music/coin_pickup.wav')
 
         this.load.once('complete', () => {
             this.startGame()

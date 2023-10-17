@@ -33,6 +33,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT
 
+    jumpSound: Phaser.Sound.BaseSound
+    projectileSound: Phaser.Sound.BaseSound
+    stepSound: Phaser.Sound.BaseSound
+    swipeSound: Phaser.Sound.BaseSound
+
     isPlayingAnims: (animsKey: string) => boolean
     addCollider: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
     addOverlap: (otherGameObject: Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) => any
@@ -52,6 +57,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     init(){
         this.cursors = this.scene.input.keyboard.createCursorKeys()
+
+        this.jumpSound = this.scene.sound.add('jump', {volume: 0.2})
+        this.projectileSound = this.scene.sound.add('projectile-launch', {volume: 0.2})
+        this.stepSound = this.scene.sound.add('step', {volume: 0.2})
+        this.swipeSound = this.scene.sound.add('swipe', {volume: 0.2})
 
         this.hp = new Healthbar(this.scene, this.scene.leftTopCorner.x + 10, this.scene.leftTopCorner.y + 10, 2, this.health)
 
@@ -99,6 +109,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         if((isSpaceJustDown) && (onFloor || this.jumpCount < this.consecutiveJumps)){
+            this.jumpSound.play()
             this.setVelocityY(-this.playerSpeed * 2)
             this.jumpCount++
         }
@@ -117,6 +128,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     handleAttacks() {
         this.scene.input.keyboard.on('keydown-Q', () => {
+            this.projectileSound.play()
             this.play('throw', true)
             this.projectiles.fireProjectile(this, 'iceball')
         })
@@ -125,6 +137,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             if(this.timeFromLastSwing && 
                 this.meleWeapon.attackSpeed + this.timeFromLastSwing > getTimestamp()) return
             
+            this.swipeSound.play()
             this.play('throw', true)
             this.meleWeapon.swing(this)
             this.timeFromLastSwing = getTimestamp()
