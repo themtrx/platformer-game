@@ -84,13 +84,17 @@ class PlayScene extends GameScene {
     createMap() {
         this.map = this.make.tilemap({ key: "map" })
         this.map.addTilesetImage("main_lev_build_1", "tiles-1")
+        this.map.addTilesetImage("bg_spikes_tileset", "bg-spikes-tileset")
     }
 
     createLayers() {
         const tileset1 = this.map.getTileset("main_lev_build_1")
+        const tilesetBG = this.map.getTileset("bg_spikes_tileset")
+
+        this.map.createLayer("distance", tilesetBG).setDepth(-12)
 
         this.platformCollider = this.map.createLayer("platform_colliders", tileset1)
-        this.environment = this.map.createLayer("environment", tileset1).setDepth(-2)
+        this.environment = this.map.createLayer("environment", tileset1).setDepth(0)
         this.platforms = this.map.createLayer("platforms", tileset1)
         this.playerZones = this.map.getObjectLayer("player_zones")
         this.enemySpawns = this.map.getObjectLayer("enemy_spawns")
@@ -107,6 +111,12 @@ class PlayScene extends GameScene {
         this.add.tileSprite(bgObject.x, bgObject.y, this.gameWidth, bgObject.height, 'bg_spikes_dark')
             .setOrigin(0, 1)
             .setDepth(-1)
+            .setScrollFactor(0, 1)
+
+        this.add.tileSprite(0, 0, this.gameWidth, 180, 'sky_play')
+            .setOrigin(0, 0)
+            .setDepth(-11)
+            .setScale(1.2)
             .setScrollFactor(0, 1)
     }
 
