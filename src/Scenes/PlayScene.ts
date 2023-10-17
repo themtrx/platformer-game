@@ -39,6 +39,8 @@ class PlayScene extends GameScene {
     spikesImage: Phaser.GameObjects.TileSprite
     skyImage: Phaser.GameObjects.TileSprite
 
+    collectSound: Phaser.Sound.BaseSound
+
     constructor() {
         super("PlayScene")
     }
@@ -60,6 +62,8 @@ class PlayScene extends GameScene {
         this.setUpFollowupCameraOn()
         this.createBG()
         this.createBackBtn()
+
+        this.collectSound = this.sound.add('coin-pickup', {volume: 0.2})
 
         if(data.gameStatus == 'PLAYER_LOOSE') return
         this.createGameEvents()
@@ -174,6 +178,7 @@ class PlayScene extends GameScene {
     onCollect(entity: Enemy | Player, collectable: Phaser.Physics.Arcade.Sprite) {
         if (!collectable.visible) return
 
+        this.collectSound.play()
         this.score += (collectable as Collectable).score
         this.hud.updateScoreBoard(this.score)
         //@param hideGameObject - this will hide the object, default is false

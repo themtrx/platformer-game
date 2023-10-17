@@ -75,6 +75,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.handleAttacks()
         this.handleMovements()
 
+        this.scene.time.addEvent({
+            delay: 300,
+            repeat: -1,
+            callbackScope: this,
+            callback: () => {
+                if(this.isPlayingAnims('run')){
+                    this.stepSound.play()
+                }
+            }
+        })
+
         this.projectiles = new Projectiles(this.scene, 'iceball-1')
         this.meleWeapon = new MeleWeapon(this.scene, 0, 0, 'sword-default')
     }
