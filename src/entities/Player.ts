@@ -76,6 +76,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     update() {
         if(this.hasBeenHit || this.isSliding || !this.body) return
 
+        //Player falls off the map
+        if(this.getBounds().top > this.scene.gameHeight){
+            EventEmitter.emit('PLAYER_LOOSE')
+            return
+        }
+
         const { left, right, space, down } = this.cursors
         const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space)
         const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor()
