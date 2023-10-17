@@ -36,6 +36,9 @@ class PlayScene extends GameScene {
     hud: Hud
     score: number = 0
 
+    spikesImage: Phaser.GameObjects.TileSprite
+    skyImage: Phaser.GameObjects.TileSprite
+
     constructor() {
         super("PlayScene")
     }
@@ -79,6 +82,8 @@ class PlayScene extends GameScene {
     }
 
     update(time: number, delta: number) {
+        this.spikesImage.tilePositionX = this.cameras.main.scrollX * 0.3
+        this.skyImage.tilePositionX = this.cameras.main.scrollX * 0.1
     }
 
     createMap() {
@@ -108,12 +113,12 @@ class PlayScene extends GameScene {
     createBG() {
         const bgObject = this.map.getObjectLayer("distance_bg").objects[0]
         
-        this.add.tileSprite(bgObject.x, bgObject.y, this.gameWidth, bgObject.height, 'bg_spikes_dark')
+        this.spikesImage = this.add.tileSprite(bgObject.x, bgObject.y, this.gameWidth, bgObject.height, 'bg_spikes_dark')
             .setOrigin(0, 1)
             .setDepth(-1)
             .setScrollFactor(0, 1)
 
-        this.add.tileSprite(0, 0, this.gameWidth, 180, 'sky_play')
+        this.skyImage = this.add.tileSprite(0, 0, this.gameWidth, 180, 'sky_play')
             .setOrigin(0, 0)
             .setDepth(-11)
             .setScale(1.2)
