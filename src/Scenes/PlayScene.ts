@@ -87,7 +87,7 @@ class PlayScene extends GameScene {
     }
 
     createMap() {
-        this.map = this.make.tilemap({ key: "map" })
+        this.map = this.make.tilemap({ key: "level-1" })
         this.map.addTilesetImage("main_lev_build_1", "tiles-1")
         this.map.addTilesetImage("bg_spikes_tileset", "bg-spikes-tileset")
     }
