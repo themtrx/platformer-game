@@ -54,6 +54,7 @@ class PlayScene extends GameScene {
         this.createEnemiesColliders()
         this.createEndOfLevel()
         this.setUpFollowupCameraOn()
+        this.createBG()
 
         if(data.gameStatus == 'PLAYER_LOOSE') return
         this.createGameEvents()
@@ -98,6 +99,15 @@ class PlayScene extends GameScene {
 
         this.platformCollider.setCollisionByProperty({ collides: true })
         this.traps.setCollisionByExclusion([-1])
+    }
+
+    createBG() {
+        const bgObject = this.map.getObjectLayer("distance_bg").objects[0]
+        
+        this.add.tileSprite(bgObject.x, bgObject.y, this.gameWidth, bgObject.height, 'bg_spikes_dark')
+            .setOrigin(0, 1)
+            .setDepth(-1)
+            .setScrollFactor(0, 1)
     }
 
     getPlayerZones() {

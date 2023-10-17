@@ -17,7 +17,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     gravity: number = 500
     playerSpeed: number = 150
 
-    health: number = 30
+    health: number = 100
     hp: Healthbar
 
     jumpCount: number = 0
